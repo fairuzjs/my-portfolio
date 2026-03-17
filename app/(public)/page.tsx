@@ -5,6 +5,7 @@ import SectionHeader from "@/components/SectionHeader";
 import HomeClientEffects from "@/components/HomeClientEffects";
 import Hero3DBackground from "@/components/Hero3DBackground";
 import type { Project } from "@/lib/projects";
+import { readProjectsFile } from "@/lib/projects";
 import { icons } from "@/components/TechIcons";
 
 // ─── Skills grouped by category ──────────────────────────────────────────────
@@ -30,14 +31,12 @@ const skillGroups = [
 
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
+export const dynamic = "force-dynamic";
+
 async function getFeaturedProjects(): Promise<Project[]> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/projects?featured=true`,
-      { cache: "no-store" }
-    );
-    const data = await res.json();
-    return (data.projects ?? []).slice(0, 3);
+    const data = await readProjectsFile();
+    return (data.projects ?? []).filter((p) => p.featured).slice(0, 3);
   } catch {
     return [];
   }

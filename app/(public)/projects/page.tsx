@@ -1,13 +1,12 @@
 import type { Project } from "@/lib/projects";
+import { readProjectsFile } from "@/lib/projects";
 import ProjectsClientGrid from "@/components/ProjectsClientGrid";
+
+export const dynamic = "force-dynamic";
 
 async function getProjects(): Promise<Project[]> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/projects`,
-      { cache: "no-store" }
-    );
-    const data = await res.json();
+    const data = await readProjectsFile();
     return data.projects ?? [];
   } catch {
     return [];
