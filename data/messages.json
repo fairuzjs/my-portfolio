@@ -1,0 +1,13 @@
+{
+  "messages": [
+    {
+      "id": "msg-1773766700861",
+      "name": "Budi Santoso",
+      "email": "budi@example.com",
+      "subject": "Kolaborasi Proyek Web",
+      "message": "Halo, saya tertarik untuk berkolaborasi dalam proyek web. Apakah Anda tersedia untuk diskusi lebih lanjut?",
+      "read": true,
+      "createdAt": "2026-03-17T16:58:20.862Z"
+    }
+  ]
+}

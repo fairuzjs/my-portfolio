@@ -1,0 +1,46 @@
+import { ReactNode } from "react";
+
+export const icons: Record<string, ReactNode> = {
+  "React": <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "React / Next.js": <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Next.js": <img src="https://cdn.simpleicons.org/nextdotjs/000000" alt="Next.js" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "TypeScript": <img src="https://cdn.simpleicons.org/typescript/3178C6" alt="TypeScript" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "JavaScript": <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Javascript": <img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Tailwind CSS": <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Tailwind": <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "HTML & CSS": <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML5" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "HTML": <img src="https://cdn.simpleicons.org/html5/E34F26" alt="HTML5" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "CSS": <img src="https://cdn.simpleicons.org/css3/1572B6" alt="CSS3" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Node.js": <img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Express.js": <img src="https://cdn.simpleicons.org/express/000000" alt="Express.js" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "REST API": <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[1.2em] h-[1.2em] text-sky-500"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
+  "GraphQL": <img src="https://cdn.simpleicons.org/graphql/E10098" alt="GraphQL" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "PostgreSQL": <img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="PostgreSQL" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Postgres": <img src="https://cdn.simpleicons.org/postgresql/4169E1" alt="Postgres" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "MongoDB": <img src="https://cdn.simpleicons.org/mongodb/47A248" alt="MongoDB" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "MySQL": <img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Redis": <img src="https://cdn.simpleicons.org/redis/DC382D" alt="Redis" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Prisma ORM": <img src="https://cdn.simpleicons.org/prisma/2D3748" alt="Prisma" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "Docker": <img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Git": <img src="https://cdn.simpleicons.org/git/F05032" alt="Git" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "GitHub": <img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "Github": <img src="https://cdn.simpleicons.org/github/181717" alt="Github" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "GitHub Actions": <img src="https://cdn.simpleicons.org/githubactions/2088FF" alt="GitHub Actions" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Vercel": <img src="https://cdn.simpleicons.org/vercel/000000" alt="Vercel" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "Linux": <img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Python": <img src="https://cdn.simpleicons.org/python/3776AB" alt="Python" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Firebase": <img src="https://cdn.simpleicons.org/firebase/DD2C00" alt="Firebase" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "AWS": <img src="https://cdn.simpleicons.org/amazonaws/232F3E" alt="AWS" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Java": <img src="https://cdn.simpleicons.org/openjdk/000000" alt="Java" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "C++": <img src="https://cdn.simpleicons.org/cplusplus/00599C" alt="C++" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Go": <img src="https://cdn.simpleicons.org/go/00ADD8" alt="Go" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "PHP": <img src="https://cdn.simpleicons.org/php/777BB4" alt="PHP" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Flask": <img src="https://cdn.simpleicons.org/flask/000000" alt="Flask" className="w-[1.2em] h-[1.2em] dark:invert" loading="lazy" />,
+  "Laravel": <img src="https://cdn.simpleicons.org/laravel/FF2D20" alt="Laravel" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+  "Supabase": <img src="https://cdn.simpleicons.org/supabase/3ECF8E" alt="Supabase" className="w-[1.2em] h-[1.2em]" loading="lazy" />,
+};
+
+export const getIconForTag = (tag: string): ReactNode | null => {
+  return icons[tag] || null;
+};

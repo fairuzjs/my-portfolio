@@ -1,0 +1,167 @@
+{
+  "projects": [
+    {
+      "id": "proj-1773293263350",
+      "title": "Memory Map - Interactive Memories",
+      "description": "Memory Map adalah aplikasi web full‑stack modern yang memungkinkan pengguna untuk menyimpan, berbagi, dan menjelajahi kenangan (memories) pada sebuah peta interaktif. Kamu bisa menandai lokasi, memberi cerita/media, serta berinteraksi sosial.",
+      "images": [
+        "/uploads/project-1773293180260.jpg",
+        "/uploads/project-1773293187799.jpg",
+        "/uploads/project-1773293203739.jpg",
+        "/uploads/project-1773293210228.jpg"
+      ],
+      "tags": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "PostgreSQL"
+      ],
+      "liveUrl": "https://memory-map-theta.vercel.app/",
+      "githubUrl": "https://github.com/fairuzjs/memory-map.git",
+      "featured": true,
+      "category": "Full Stack",
+      "createdAt": "2026-03-12T05:27:43.350Z",
+      "updatedAt": "2026-03-16T14:02:40.363Z"
+    },
+    {
+      "id": "proj-1773287892246",
+      "title": "GoSummit - Ticketing System",
+      "description": "GoSummit adalah sistem pemesanan tiket pendakian gunung berbasis web yang dibangun dengan Laravel 10. Aplikasi ini menyediakan platform lengkap untuk mengelola pemesanan tiket pendakian, manajemen kuota, pembayaran online, dan sistem administrasi yang komprehensif.",
+      "images": [
+        "/uploads/project-1773287799036.jpg",
+        "/uploads/project-1773287809225.jpg",
+        "/uploads/project-1773287847199.jpg",
+        "/uploads/project-1773287860041.jpg"
+      ],
+      "tags": [
+        "Laravel",
+        "PHP",
+        "MySQL"
+      ],
+      "liveUrl": "https://memory-map-theta.vercel.app/",
+      "githubUrl": "https://github.com/fairuzjs/gosummit-laravel.git",
+      "featured": true,
+      "category": "Full Stack",
+      "createdAt": "2026-03-12T03:58:12.246Z",
+      "updatedAt": "2026-03-12T05:31:49.736Z"
+    },
+    {
+      "id": "proj-001",
+      "title": "Flask - Diabetes Analytics",
+      "description": "Project ini merupakan aplikasi web yang menganalisis data penderita Diabetes Mellitus di 27 kabupaten/kota di Jawa Barat. Aplikasi ini menyajikan visualisasi data interaktif, analisis statistik, dan insight mendalam tentang penyebaran penyakit DM di wilayah Jawa Barat.",
+      "tags": [
+        "Flask",
+        "Python",
+        "HTML",
+        "JavaScript"
+      ],
+      "liveUrl": "https://shopease.demo.com",
+      "githubUrl": "https://github.com/fairuzjs/flask-analytics.git",
+      "featured": true,
+      "category": "Backend",
+      "createdAt": "2026-03-01T00:00:00.000Z",
+      "updatedAt": "2026-03-16T11:04:18.325Z",
+      "images": [
+        "/project-ecommerce.png"
+      ]
+    },
+    {
+      "id": "proj-002",
+      "title": "MoneyWise – Finance Manager",
+      "description": "Aplikasi manajemen keuangan personal dengan visualisasi data interaktif, kategori transaksi, dan laporan bulanan otomatis.",
+      "tags": [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "TypeScript"
+      ],
+      "liveUrl": "https://moneywise.demo.com",
+      "githubUrl": "https://github.com/danendra/moneywise",
+      "featured": false,
+      "category": "Web App",
+      "createdAt": "2026-02-15T00:00:00.000Z",
+      "updatedAt": "2026-02-15T00:00:00.000Z",
+      "images": [
+        "/project-finance.png"
+      ]
+    },
+    {
+      "id": "proj-003",
+      "title": "ConnectSphere – Social Platform",
+      "description": "Platform media sosial dengan feed real-time, messaging langsung, sistem notifikasi, dan fitur berbagi foto.",
+      "tags": [
+        "Next.js",
+        "Firebase",
+        "Tailwind",
+        "TypeScript"
+      ],
+      "liveUrl": "https://connectsphere.demo.com",
+      "githubUrl": "https://github.com/danendra/connectsphere",
+      "featured": false,
+      "category": "Full Stack",
+      "createdAt": "2026-02-01T00:00:00.000Z",
+      "updatedAt": "2026-02-01T00:00:00.000Z",
+      "images": [
+        "/project-social.png"
+      ]
+    },
+    {
+      "id": "proj-004",
+      "title": "TaskFlow – Project Manager",
+      "description": "Aplikasi manajemen proyek tim dengan fitur kanban board, time tracking, dan integrasi Slack/Notion.",
+      "tags": [
+        "React",
+        "Node.js",
+        "PostgreSQL",
+        "TypeScript"
+      ],
+      "liveUrl": "https://taskflow.demo.com",
+      "githubUrl": "https://github.com/danendra/taskflow",
+      "featured": false,
+      "category": "Full Stack",
+      "createdAt": "2026-01-15T00:00:00.000Z",
+      "updatedAt": "2026-01-15T00:00:00.000Z",
+      "images": [
+        "/project-ecommerce.png"
+      ]
+    },
+    {
+      "id": "proj-005",
+      "title": "DevBlog – Technical Blog",
+      "description": "Blog teknikal dengan MDX support, syntax highlighting, dark mode, dan SEO yang dioptimalkan untuk developer.",
+      "tags": [
+        "Next.js",
+        "Tailwind",
+        "TypeScript"
+      ],
+      "liveUrl": "",
+      "githubUrl": "https://github.com/danendra/devblog",
+      "featured": false,
+      "category": "Frontend",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z",
+      "images": [
+        "/project-social.png"
+      ]
+    },
+    {
+      "id": "proj-006",
+      "title": "API Gateway Service",
+      "description": "Microservices API gateway dengan rate limiting, authentication JWT, logging terpusat, dan health monitoring.",
+      "tags": [
+        "Node.js",
+        "Python",
+        "Docker"
+      ],
+      "liveUrl": "",
+      "githubUrl": "https://github.com/danendra/api-gateway",
+      "featured": false,
+      "category": "Backend",
+      "createdAt": "2025-12-01T00:00:00.000Z",
+      "updatedAt": "2025-12-01T00:00:00.000Z",
+      "images": [
+        "/project-finance.png"
+      ]
+    }
+  ]
+}
