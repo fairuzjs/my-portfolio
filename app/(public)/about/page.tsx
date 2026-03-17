@@ -399,7 +399,7 @@ export default function AboutPage() {
               {/* Photo frame with gradient border */}
               <div className="relative w-72 h-80 sm:w-80 sm:h-96 p-[3px] rounded-3xl bg-gradient-to-br from-[#4FD1C5] to-[#2B6CB0] shadow-[0_20px_60px_rgba(79,209,197,0.2)]">
                 <div className="w-full h-full rounded-[22px] overflow-hidden bg-slate-200 dark:bg-slate-700">
-                  <Image src="/profile.png" alt="Danendra" fill className="object-cover" />
+                  <Image src="/myphoto2.jpeg" alt="Danendra" fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-br from-[#4FD1C5]/8 to-[#2B6CB0]/8" />
                 </div>
               </div>

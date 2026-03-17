@@ -171,7 +171,7 @@ export default async function HomePage() {
                 <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#4FD1C5]/10 to-[#2B6CB0]/10 z-10 rounded-full" />
                   <Image
-                    src="/profile.png"
+                    src="/myphoto.jpeg"
                     alt="Danendra – Full Stack Developer"
                     fill
                     className="object-cover"
