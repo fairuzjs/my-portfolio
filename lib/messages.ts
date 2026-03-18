@@ -1,7 +1,4 @@
-import { promises as fs } from "fs";
-import path from "path";
-
-const DATA_FILE = path.join(process.cwd(), "data", "messages.json");
+import { supabase } from "./supabase";
 
 export interface Message {
   id: string;
@@ -18,14 +15,39 @@ interface MessagesFile {
 }
 
 export async function readMessagesFile(): Promise<MessagesFile> {
-  try {
-    const raw = await fs.readFile(DATA_FILE, "utf-8");
-    return JSON.parse(raw) as MessagesFile;
-  } catch {
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*")
+    .order("createdAt", { ascending: false });
+
+  if (error) {
+    console.error("Error reading messages from Supabase:", error);
     return { messages: [] };
   }
+
+  return { messages: data as Message[] };
 }
 
-export async function writeMessagesFile(data: MessagesFile): Promise<void> {
-  await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
+export async function insertMessage(msg: Partial<Message>) {
+  const { data, error } = await supabase
+    .from("messages")
+    .insert([msg])
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function markMessageReadAction(id: string) {
+  const { error } = await supabase
+    .from("messages")
+    .update({ read: true })
+    .eq("id", id);
+  if (error) throw error;
+}
+
+export async function deleteMessageAction(id: string) {
+  const { error } = await supabase.from("messages").delete().eq("id", id);
+  if (error) throw error;
 }

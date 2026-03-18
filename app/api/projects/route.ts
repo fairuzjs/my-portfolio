@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readProjectsFile, writeProjectsFile } from "@/lib/projects";
+import { readProjectsFile, upsertProject } from "@/lib/projects";
 
 // GET /api/projects
 export async function GET(request: Request) {
@@ -26,7 +26,6 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const data = await readProjectsFile();
 
     // Handle backward compatibility if client still sends 'image'
     const imagesArray = body.images 
@@ -43,14 +42,13 @@ export async function POST(request: Request) {
       githubUrl: body.githubUrl ?? "",
       featured: body.featured ?? false,
       category: body.category ?? "Web App",
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      // createdAt and updatedAt will be handled by DB defaults if not provided,
+      // but we can pass them explicitely if we want.
     };
 
-    data.projects.unshift(newProject);
-    await writeProjectsFile(data);
+    const inserted = await upsertProject(newProject);
 
-    return NextResponse.json({ project: newProject }, { status: 201 });
+    return NextResponse.json({ project: inserted }, { status: 201 });
   } catch {
     return NextResponse.json(
       { error: "Gagal menambah proyek" },

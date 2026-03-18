@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readProjectsFile, writeProjectsFile } from "@/lib/projects";
+import { readProjectsFile, upsertProject, deleteProjectAction } from "@/lib/projects";
 
 // GET /api/projects/[id]
 export async function GET(
@@ -28,15 +28,16 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const data = await readProjectsFile();
 
-    const idx = data.projects.findIndex((p) => p.id === id);
-    if (idx === -1) {
+    const data = await readProjectsFile();
+    const existingProject = data.projects.find((p) => p.id === id);
+
+    if (!existingProject) {
       return NextResponse.json({ error: "Proyek tidak ditemukan" }, { status: 404 });
     }
 
     // Handle backward compatibility
-    let newImages = data.projects[idx].images || [];
+    let newImages = existingProject.images || [];
     if (body.images) {
       newImages = body.images;
     } else if (body.image) {
@@ -46,21 +47,16 @@ export async function PUT(
     // Remove legacy image field if present in body to avoid saving it
     const { image, ...bodyWithoutImage } = body;
 
-    data.projects[idx] = {
-      ...data.projects[idx],
+    const updatedProjectData = {
+      ...existingProject,
       ...bodyWithoutImage,
       images: newImages,
       id, // prevent id change
-      updatedAt: new Date().toISOString(),
     };
 
-    // Clean up residual `image` property if it still exists in the original data
-    if ("image" in data.projects[idx]) {
-      delete (data.projects[idx] as any).image;
-    }
+    const updatedProject = await upsertProject(updatedProjectData);
 
-    await writeProjectsFile(data);
-    return NextResponse.json({ project: data.projects[idx] });
+    return NextResponse.json({ project: updatedProject });
   } catch {
     return NextResponse.json({ error: "Gagal mengupdate proyek" }, { status: 500 });
   }
@@ -73,15 +69,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const data = await readProjectsFile();
-
-    const idx = data.projects.findIndex((p) => p.id === id);
-    if (idx === -1) {
-      return NextResponse.json({ error: "Proyek tidak ditemukan" }, { status: 404 });
-    }
-
-    data.projects.splice(idx, 1);
-    await writeProjectsFile(data);
+    await deleteProjectAction(id);
 
     return NextResponse.json({ success: true });
   } catch {

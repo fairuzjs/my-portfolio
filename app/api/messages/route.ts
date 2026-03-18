@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { readMessagesFile, writeMessagesFile } from "@/lib/messages";
+import {
+  readMessagesFile,
+  insertMessage,
+  markMessageReadAction,
+  deleteMessageAction,
+} from "@/lib/messages";
 
 // GET /api/messages  (admin only — protected by middleware)
 export async function GET() {
@@ -27,8 +32,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = await readMessagesFile();
-
     const newMessage = {
       id: `msg-${Date.now()}`,
       name: String(name).trim(),
@@ -36,13 +39,11 @@ export async function POST(request: Request) {
       subject: String(subject).trim(),
       message: String(message).trim(),
       read: false,
-      createdAt: new Date().toISOString(),
     };
 
-    data.messages.unshift(newMessage);
-    await writeMessagesFile(data);
+    const inserted = await insertMessage(newMessage);
 
-    return NextResponse.json({ message: newMessage }, { status: 201 });
+    return NextResponse.json({ message: inserted }, { status: 201 });
   } catch {
     return NextResponse.json(
       { error: "Gagal menyimpan pesan" },
@@ -55,16 +56,13 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const { id } = await request.json();
-    const data = await readMessagesFile();
-    const msg = data.messages.find((m) => m.id === id);
-    if (!msg) {
-      return NextResponse.json({ error: "Pesan tidak ditemukan" }, { status: 404 });
-    }
-    msg.read = true;
-    await writeMessagesFile(data);
+    await markMessageReadAction(id);
     return NextResponse.json({ ok: true });
   } catch {
-    return NextResponse.json({ error: "Gagal memperbarui pesan" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Gagal memperbarui pesan" },
+      { status: 500 }
+    );
   }
 }
 
@@ -72,11 +70,12 @@ export async function PATCH(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
-    const data = await readMessagesFile();
-    data.messages = data.messages.filter((m) => m.id !== id);
-    await writeMessagesFile(data);
+    await deleteMessageAction(id);
     return NextResponse.json({ ok: true });
   } catch {
-    return NextResponse.json({ error: "Gagal menghapus pesan" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Gagal menghapus pesan" },
+      { status: 500 }
+    );
   }
 }

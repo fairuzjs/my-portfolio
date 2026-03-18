@@ -1,7 +1,4 @@
-import { promises as fs } from "fs";
-import path from "path";
-
-const DATA_FILE = path.join(process.cwd(), "data", "projects.json");
+import { supabase } from "./supabase";
 
 export interface Project {
   id: string;
@@ -22,10 +19,32 @@ interface ProjectsFile {
 }
 
 export async function readProjectsFile(): Promise<ProjectsFile> {
-  const raw = await fs.readFile(DATA_FILE, "utf-8");
-  return JSON.parse(raw) as ProjectsFile;
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("createdAt", { ascending: false });
+
+  if (error) {
+    console.error("Error reading projects from Supabase:", error);
+    return { projects: [] };
+  }
+
+  return { projects: data as Project[] };
 }
 
-export async function writeProjectsFile(data: ProjectsFile): Promise<void> {
-  await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
+// Helper functions for API routes to update DB directly
+export async function upsertProject(project: Partial<Project>) {
+  const { data, error } = await supabase
+    .from("projects")
+    .upsert(project)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteProjectAction(id: string) {
+  const { error } = await supabase.from("projects").delete().eq("id", id);
+  if (error) throw error;
 }

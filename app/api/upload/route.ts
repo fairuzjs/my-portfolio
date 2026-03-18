@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { existsSync } from "fs";
-import path from "path";
+import { supabase } from "@/lib/supabase";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -30,20 +28,30 @@ export async function POST(request: Request) {
       );
     }
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
     const ext = file.name.split(".").pop() ?? "jpg";
     const filename = `project-${Date.now()}.${ext}`;
-    const filepath = path.join(uploadDir, filename);
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await writeFile(filepath, buffer);
+    const buffer = await file.arrayBuffer();
 
-    return NextResponse.json({ url: `/uploads/${filename}` });
-  } catch {
+    const { error } = await supabase.storage
+      .from("portfolio-images")
+      .upload(filename, buffer, {
+        contentType: file.type,
+        upsert: false,
+      });
+
+    if (error) {
+      console.error("Supabase storage error:", error);
+      throw error;
+    }
+
+    const { data: publicData } = supabase.storage
+      .from("portfolio-images")
+      .getPublicUrl(filename);
+
+    return NextResponse.json({ url: publicData.publicUrl });
+  } catch (err: any) {
+    console.error("Upload handler error:", err);
     return NextResponse.json(
       { error: "Upload gagal. Coba lagi." },
       { status: 500 }
