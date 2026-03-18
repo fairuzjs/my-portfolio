@@ -57,11 +57,24 @@ export default function ProjectForm({ initialData, mode, projectId }: ProjectFor
     liveUrl: initialData?.liveUrl ?? "",
     githubUrl: initialData?.githubUrl ?? "",
     featured: initialData?.featured ?? false,
-    category: initialData?.category ?? "Web App",
+    category: Array.isArray(initialData?.category) ? initialData.category : ["Web App"],
   });
 
   const set = (field: string, val: unknown) =>
     setForm((prev) => ({ ...prev, [field]: val }));
+
+  const toggleCategory = (cat: string) => {
+    setForm((prev) => {
+      const isSelected = prev.category.includes(cat);
+      if (isSelected) {
+        // Prevent unselecting the last one
+        return prev.category.length > 1 
+            ? { ...prev, category: prev.category.filter(c => c !== cat) }
+            : prev;
+      }
+      return { ...prev, category: [...prev.category, cat] };
+    });
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -172,59 +185,60 @@ export default function ProjectForm({ initialData, mode, projectId }: ProjectFor
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Category */}
-                <div>
-                  <Label required>Kategori</Label>
-                  <div className="relative">
-                    <select
-                      value={form.category}
-                      onChange={(e) => set("category", e.target.value)}
-                      className={inputCls + " appearance-none cursor-pointer pr-9"}
-                    >
-                      {CATEGORIES.map((c) => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                    <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </div>
+              <div>
+                <Label required>Kategori</Label>
+                <div className="flex flex-wrap gap-2">
+                  {CATEGORIES.map((c) => {
+                    const isSelected = form.category.includes(c);
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => toggleCategory(c)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+                          isSelected 
+                            ? "bg-teal-50 border-teal-200 text-teal-700 hover:bg-teal-100" 
+                            : "bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100"
+                        }`}
+                      >
+                        {c}
+                      </button>
+                    );
+                  })}
                 </div>
+              </div>
 
-                {/* Featured toggle */}
-                <div>
-                  <Label>Featured</Label>
-                  <button
-                    type="button"
-                    onClick={() => set("featured", !form.featured)}
-                    className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl border
-                      text-[13px] font-semibold transition-all duration-200 cursor-pointer
+              {/* Featured toggle */}
+              <div>
+                <Label>Featured</Label>
+                <button
+                  type="button"
+                  onClick={() => set("featured", !form.featured)}
+                  className={`flex items-center gap-3 w-full sm:w-1/2 px-3.5 py-2.5 rounded-xl border
+                    text-[13px] font-semibold transition-all duration-200 cursor-pointer
+                    ${form.featured
+                      ? "bg-teal-50 border-teal-200 text-teal-700"
+                      : "bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100"
+                    }`}
+                >
+                  <span
+                    className={`relative inline-flex w-9 h-5 rounded-full flex-shrink-0
+                      transition-colors duration-200
                       ${form.featured
-                        ? "bg-teal-50 border-teal-200 text-teal-700"
-                        : "bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100"
+                        ? "bg-gradient-to-r from-teal-500 to-sky-600"
+                        : "bg-slate-200"
                       }`}
                   >
                     <span
-                      className={`relative inline-flex w-9 h-5 rounded-full flex-shrink-0
-                        transition-colors duration-200
-                        ${form.featured
-                          ? "bg-gradient-to-r from-teal-500 to-sky-600"
-                          : "bg-slate-200"
-                        }`}
-                    >
-                      <span
-                        className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm
-                          transition-transform duration-200
-                          ${form.featured ? "translate-x-4" : "translate-x-0.5"}`}
-                      />
-                    </span>
-                    {form.featured ? "Tampilkan di home" : "Tidak featured"}
-                  </button>
-                </div>
+                      className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-sm
+                        transition-transform duration-200
+                        ${form.featured ? "translate-x-4" : "translate-x-0.5"}`}
+                    />
+                  </span>
+                  {form.featured ? "Tampilkan di home" : "Tidak featured"}
+                </button>
               </div>
+
 
               {/* Description */}
               <div>

@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 text-[#4FD1C5] text-[11px] font-bold uppercase tracking-widest
                 px-3 py-1 rounded-full mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#4FD1C5] flex-shrink-0" />
-                {project.category}
+                {Array.isArray(project.category) ? project.category.join(", ") : project.category}
               </span>
               <h1
                 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] dark:text-slate-100 leading-tight tracking-tight"
@@ -126,9 +126,17 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-1">
                   Kategori
                 </p>
-                <p className="text-[13px] font-semibold text-slate-300 leading-tight">
-                  {project.category}
-                </p>
+                <div className="flex flex-wrap gap-2">
+                  {Array.isArray(project.category) ? project.category.map(cat => (
+                    <span key={cat} className="inline-block px-3 py-1.5 bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wider rounded-lg border border-teal-100">
+                      {cat}
+                    </span>
+                  )) : (
+                    <span className="inline-block px-3 py-1.5 bg-teal-50 text-teal-700 text-xs font-bold uppercase tracking-wider rounded-lg border border-teal-100">
+                      {project.category}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Tech Stack count — from project.tags.length */}

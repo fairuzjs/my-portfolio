@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from "@/lib/supabase";
 
 export interface Project {
   id: string;
@@ -6,45 +6,57 @@ export interface Project {
   description: string;
   images: string[];
   tags: string[];
-  liveUrl: string;
-  githubUrl: string;
+  liveUrl?: string;
+  githubUrl?: string;
   featured: boolean;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
+  category: string[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-interface ProjectsFile {
-  projects: Project[];
-}
+// === HELPER UNTUK DATABASE SUPABASE ===
 
-export async function readProjectsFile(): Promise<ProjectsFile> {
+export async function readProjectsFile(): Promise<{ projects: Project[] }> {
+  // Ambil semua project dari Supabase, urutkan dari yang terbaru
   const { data, error } = await supabase
     .from("projects")
     .select("*")
     .order("createdAt", { ascending: false });
 
   if (error) {
-    console.error("Error reading projects from Supabase:", error);
+    console.error("Gagal membaca dari Supabase:", error);
     return { projects: [] };
   }
 
-  return { projects: data as Project[] };
+  // Supabase returns null or undefined for empty arrays sometimes, default empty categories
+  const projects = data.map(p => ({
+    ...p,
+    category: Array.isArray(p.category) ? p.category : p.category ? [p.category as string] : ["Web App"],
+  }));
+
+  return { projects: projects as Project[] };
 }
 
-// Helper functions for API routes to update DB directly
-export async function upsertProject(project: Partial<Project>) {
+export async function upsertProject(project: Project) {
   const { data, error } = await supabase
     .from("projects")
     .upsert(project)
     .select()
     .single();
 
-  if (error) throw error;
+  if (error) {
+    console.error("Gagal menyimpan ke Supabase:", error);
+    throw error;
+  }
+
   return data;
 }
 
 export async function deleteProjectAction(id: string) {
   const { error } = await supabase.from("projects").delete().eq("id", id);
-  if (error) throw error;
+  if (error) {
+    console.error("Gagal menghapus di Supabase:", error);
+    throw error;
+  }
+  return true;
 }

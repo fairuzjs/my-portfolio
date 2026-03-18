@@ -16,7 +16,7 @@ export default function ProjectsClientGrid({ projects }: { projects: Project[] }
   const filtered =
     activeCategory === "Semua"
       ? projects
-      : projects.filter((p) => p.category === activeCategory);
+      : projects.filter((p) => p.category && p.category.includes(activeCategory));
 
   return (
     <>

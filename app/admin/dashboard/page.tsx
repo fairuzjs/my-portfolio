@@ -13,7 +13,7 @@ interface Project {
   description: string;
   images: string[];
   tags: string[];
-  category: string;
+  category: string[];
   featured: boolean;
   liveUrl?: string;
   githubUrl?: string;
@@ -293,14 +293,24 @@ export default function AdminDashboardPage() {
   // ── Derived stats ──
   const totalProjects = projects.length;
   const featuredCount = projects.filter((p) => p.featured).length;
-  const categoryCount = new Set(projects.map((p) => p.category)).size;
+  const uniqueCategories = new Set<string>();
+  projects.forEach((p) => {
+    if (Array.isArray(p.category)) {
+      p.category.forEach((c) => uniqueCategories.add(c));
+    } else if (typeof p.category === "string") {
+      uniqueCategories.add(p.category);
+    }
+  });
+  const categoryCount = uniqueCategories.size;
   const unreadCount = messages.filter((m) => !m.read).length;
 
   // ── Filtered list ──
   const filtered = projects.filter(
     (p) =>
       p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.category.toLowerCase().includes(search.toLowerCase()) ||
+      (Array.isArray(p.category) 
+        ? p.category.some((cat) => cat.toLowerCase().includes(search.toLowerCase()))
+        : p.category && (p.category as unknown as string).toLowerCase().includes(search.toLowerCase())) ||
       p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()))
   );
 
@@ -556,7 +566,6 @@ export default function AdminDashboardPage() {
                   </div>
                 ) : (
                   filtered.map((project) => {
-                    const catStyle = getCategoryStyle(project.category);
                     const thumb = project.images?.[0] || "/placeholder.png";
                     const previewTags = project.tags.slice(0, 2);
                     const extraTags = project.tags.length - 2;
@@ -584,10 +593,24 @@ export default function AdminDashboardPage() {
                         </div>
 
                         {/* Category */}
-                        <span className={`text-[11px] font-600 font-semibold px-2.5 py-1 rounded-lg border w-fit
-                          ${catStyle.text} ${catStyle.bg} ${catStyle.border}`}>
-                          {project.category}
-                        </span>
+                        <div className="flex flex-col gap-1 items-start">
+                          {Array.isArray(project.category) ? project.category.map(cat => {
+                            const catStyle = getCategoryStyle(cat);
+                            return (
+                              <span key={cat} className={`text-[11px] font-600 font-semibold px-2.5 py-1 rounded-lg border w-fit
+                                ${catStyle.text} ${catStyle.bg} ${catStyle.border}`}>
+                                {cat}
+                              </span>
+                            );
+                          }) : (
+                            <span className={`text-[11px] font-600 font-semibold px-2.5 py-1 rounded-lg border w-fit
+                              ${getCategoryStyle(project.category as unknown as string).text} 
+                              ${getCategoryStyle(project.category as unknown as string).bg} 
+                              ${getCategoryStyle(project.category as unknown as string).border}`}>
+                              {project.category}
+                            </span>
+                          )}
+                        </div>
 
                         {/* Tags */}
                         <div className="flex items-center gap-1.5 flex-wrap">
@@ -676,7 +699,6 @@ export default function AdminDashboardPage() {
                 </div>
               ) : (
                 filtered.map((project) => {
-                  const catStyle = getCategoryStyle(project.category);
                   const thumb = project.images?.[0] || "/placeholder.png";
 
                   return (
@@ -704,10 +726,22 @@ export default function AdminDashboardPage() {
 
                           {/* Category + tags */}
                           <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-                            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border
-                              ${catStyle.text} ${catStyle.bg} ${catStyle.border}`}>
-                              {project.category}
-                            </span>
+                            {Array.isArray(project.category) ? project.category.map(cat => {
+                              const catStyle = getCategoryStyle(cat);
+                              return (
+                                <span key={cat} className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border
+                                  ${catStyle.text} ${catStyle.bg} ${catStyle.border}`}>
+                                  {cat}
+                                </span>
+                              );
+                            }) : (
+                              <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border
+                                ${getCategoryStyle(project.category as unknown as string).text} 
+                                ${getCategoryStyle(project.category as unknown as string).bg} 
+                                ${getCategoryStyle(project.category as unknown as string).border}`}>
+                                {project.category}
+                              </span>
+                            )}
                             {project.tags.slice(0, 2).map((tag) => (
                               <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 border border-slate-200">
                                 {tag}
